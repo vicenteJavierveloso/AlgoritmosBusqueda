@@ -1,7 +1,7 @@
 from BusquedaEnAnchura import BEA
+from BusquedaEnProfundidad import BEP
 import networkx as nx
 import matplotlib.pyplot as pyl
-import time
 
 #Inicio de creacion del grafo de prueba
 ciudades = ["Osorno", "Valdivia", "Frutillar", "Puerto Varas", "Puerto Montt", "Los Muermos", "Lago Ranco", "Futrono", "Santiago",
@@ -12,13 +12,13 @@ mapa = nx.Graph()
 mapa.add_nodes_from(ciudades)
 
 #Añade atributos a los nodos
-atributos = {"Osorno": {"numero": "1"}, "Valdivia": {"numero": "1"}, "Frutillar": {"numero": "1"}, "Puerto Varas": {"numero": "1"},
-            "Puerto Montt": {"numero": "1"}, "Los Muermos": {"numero": "1"}, "Lago Ranco": {"numero": "1"}, "Futrono": {"numero": "10"},
-            "Santiago": {"numero": "1"}, "Concepcion": {"numero": "1"}, "Constitucion": {"numero": "1"}, "Arica": {"numero": "1"},
-            "La Serena": {"numero": "1"}, "Entre Lagos": {"numero": "1"}, "Iquique": {"numero": "1"}, 
-            "Antofagasta": {"numero": "1"}, "Valparaiso": {"numero": "1"}, "Viña del Mar": {"numero": "1"}, "Punta Arenas": {"numero": "1"}}
+# atributos = {"Osorno": {"numero": "1"}, "Valdivia": {"numero": "1"}, "Frutillar": {"numero": "1"}, "Puerto Varas": {"numero": "1"},
+#             "Puerto Montt": {"numero": "1"}, "Los Muermos": {"numero": "1"}, "Lago Ranco": {"numero": "1"}, "Futrono": {"numero": "10"},
+#             "Santiago": {"numero": "1"}, "Concepcion": {"numero": "1"}, "Constitucion": {"numero": "1"}, "Arica": {"numero": "1"},
+#             "La Serena": {"numero": "1"}, "Entre Lagos": {"numero": "1"}, "Iquique": {"numero": "1"}, 
+#             "Antofagasta": {"numero": "1"}, "Valparaiso": {"numero": "1"}, "Viña del Mar": {"numero": "1"}, "Punta Arenas": {"numero": "1"}}
 
-nx.set_node_attributes(mapa,atributos)
+# nx.set_node_attributes(mapa,atributos)
 
 mapa.add_edge("Osorno","Frutillar")
 mapa.add_edge("Frutillar","Puerto Varas")
@@ -50,9 +50,12 @@ mapa.add_edge("Valdivia", "Constitucion")
 
 #Fin creacion grafo de prueba
 
+#Busqueda en Anchura
 #Buscar algun atributo (llave) en los nodos del grafo que contenga el elemento especificado
 # comenzando desde el nodo dado
-print(BEA(mapa,"Los Muermos", "numero", "10"))
+# print(BEA(mapa,"Los Muermos", "numero", "10"))
+
+print(BEP(mapa,"Osorno"))
 
 nx.draw(mapa, with_labels=True)
 pyl.show()
