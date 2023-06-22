@@ -1,5 +1,5 @@
 from BusquedaEnAnchura import BEA
-from BusquedaEnProfundidad import BEP
+from BusquedaEnProfundidad import BEP, BEP_format
 import networkx as nx
 import matplotlib.pyplot as pyl
 
@@ -55,7 +55,9 @@ mapa.add_edge("Valdivia", "Constitucion")
 # comenzando desde el nodo dado
 # print(BEA(mapa,"Los Muermos", "numero", "10"))
 
-print(BEP(mapa,"Osorno"))
+busqueda = BEP(mapa,"Valdivia","Osorno")
+print(BEP_format(busqueda[0],busqueda[1]))
 
+#[Entre Lagos, Santiago, Constitucion,Valdivia]
 nx.draw(mapa, with_labels=True)
 pyl.show()
