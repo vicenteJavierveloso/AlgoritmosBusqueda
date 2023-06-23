@@ -79,4 +79,7 @@ def BEP_format(padres,elemento,tiempo):
     #de nodo origen -> nodo objetivo
     camino.reverse()
     #retorna la informacion y el tiempo
-    return f"El camino para llegar al nodo {elemento} es {camino} Tiempo: {tiempo*1000}ms"
+    if elemento in padres:
+        return f"El camino para llegar al nodo {elemento} es {camino} Tiempo: {tiempo*1000}ms"
+    else:
+        return f"El nodo no se encuentra en el grafo Tiempo: {tiempo*1000}ms"
