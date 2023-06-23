@@ -26,11 +26,36 @@ def busqueda_binaria(lista, elemento):
             fin = medio - 1  # El elemento buscado está en la mitad izquierda de la sección
     return -1  # Si el elemento no está en la lista 
 
-# Ejemplo de uso con lista de cadenas
-lista_cadenas = ["manzana", "uva", "cereza", "banana"]
-elemento_cadena = "uva"
-resultado_cadena = busqueda_binaria(lista_cadenas, elemento_cadena)
-if resultado_cadena != -1:
-    print(f"El elemento {elemento_cadena} se encuentra en el índice {resultado_cadena}.")
+# Ejemplo de uso con datos numéricos
+lista_numerica = [5, 8, 2, 10, 1, 7, 3]
+elemento_numerico = 7
+
+resultado_lineal = busqueda_lineal(lista_numerica, elemento_numerico)
+resultado_binario = busqueda_binaria(lista_numerica, elemento_numerico)
+
+if resultado_lineal != -1:
+    print(f"La búsqueda lineal encontró el elemento {elemento_numerico} en el índice {resultado_lineal}.")
 else:
-    print(f"El elemento {elemento_cadena} no está en la lista.")
+    print(f"La búsqueda lineal no encontró el elemento {elemento_numerico} en la lista.")
+
+if resultado_binario != -1:
+    print(f"La búsqueda binaria encontró el elemento {elemento_numerico} en el índice {resultado_binario}.")
+else:
+    print(f"La búsqueda binaria no encontró el elemento {elemento_numerico} en la lista.")
+    
+# Ejemplo de uso con datos de cadenas
+lista_cadenas = ["manzana", "banana", "cereza", "dátil", "uva", "zarzamora"]
+elemento_cadena = "banana"
+
+resultado_lineal = busqueda_lineal(lista_cadenas, elemento_cadena)
+resultado_binario = busqueda_binaria(lista_cadenas, elemento_cadena)
+
+if resultado_lineal != -1:
+    print(f"La búsqueda lineal encontró el elemento {elemento_cadena} en el índice {resultado_lineal}.")
+else:
+    print(f"La búsqueda lineal no encontró el elemento {elemento_cadena} en la lista.")
+
+if resultado_binario != -1:
+    print(f"La búsqueda binaria encontró el elemento {elemento_cadena} en el índice {resultado_binario}.")
+else:
+    print(f"La búsqueda binaria no encontró el elemento {elemento_cadena} en la lista.")
