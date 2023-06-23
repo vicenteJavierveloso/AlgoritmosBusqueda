@@ -62,7 +62,7 @@ print(BEA(mapa,"Los Muermos", "numero", "10"))
 #Se busca en el grafo mapa, el camino desde el nodo "Valdivia" a el nodo "Osorno"
 # se debe ejecutar una vez para evitar spamear el print ya que retorna algo cada vez que se llama
 #la funcion por ser recursiva por lo tanto se guarda el resultado final en una variable busqueda
-busqueda = BEP(mapa,"Valdivia","Osorno")
+busqueda = BEP(mapa,"Valdivia","Peru")
 #se da formato usando la funcion BEP_format()
 #busqueda[0]: diccionario padres
 #busqueda[1]: elemento a buscar
