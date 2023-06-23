@@ -1,55 +1,33 @@
-import time
+def busqueda_lineal(lista, elemento):
+    for i in range(len(lista)):
+        if lista[i] == elemento:
+            return i  
+    return -1  
 
-class Buscador:
-    def __init__(self, lista):
-        self.lista = lista
+def busqueda_binaria(lista, elemento):
+    lista_ordenada = sorted(lista)
+    print(
+        lista_ordenada
+    )
+    inicio = 0
+    fin = len(lista) - 1
 
-    def busqueda_lineal(self, elementos):
-        resultados = []
-        inicio = time.time()
+    while inicio <= fin:
+        medio = (inicio + fin) // 2
+        if lista_ordenada[medio] == elemento:
+            return medio  
+        elif lista_ordenada[medio] < elemento:
+            inicio = medio + 1
+        else:
+            fin = medio - 1
 
-        for elemento in elementos:
-            for i, item in enumerate(self.lista):
-                if item == elemento:
-                    resultados.append((elemento, i))
-                    break
+    return -1  
 
-        tiempo_ejecucion = time.time() - inicio
-        return resultados, tiempo_ejecucion
-
-    def busqueda_binaria(self, elementos):
-        resultados = []
-        inicio = time.time()
-
-        for elemento in elementos:
-            inicio = 0
-            fin = len(self.lista) - 1
-
-            while inicio <= fin:
-                medio = (inicio + fin) // 2
-                if self.lista[medio] == elemento:
-                    resultados.append((elemento, medio))
-                    break
-                elif self.lista[medio] < elemento:
-                    inicio = medio + 1
-                else:
-                    fin = medio - 1
-
-        tiempo_ejecucion = time.time() - inicio
-        return resultados, tiempo_ejecucion
-mi_lista = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
-buscador = Buscador(mi_lista)
-
-elementos = [12, 6, 18]
-
-resultados_lineal, tiempo_lineal = buscador.busqueda_lineal(elementos)
-print("Resultados de búsqueda lineal:")
-for elemento, indice in resultados_lineal:
-    print(f"El elemento {elemento} fue encontrado en el índice {indice}")
-print(f"Tiempo de ejecución (búsqueda lineal): {tiempo_lineal} segundos")
-
-resultados_binaria, tiempo_binaria = buscador.busqueda_binaria(elementos)
-print("Resultados de búsqueda binaria:")
-for elemento, indice in resultados_binaria:
-    print(f"El elemento {elemento} fue encontrado en el índice {indice}")
-print(f"Tiempo de ejecución (búsqueda binaria): {tiempo_binaria} segundos")
+# Ejemplo de uso con lista de cadenas
+lista_cadenas = ["manzana", "uva", "cereza", "banana"]
+elemento_cadena = "uva"
+resultado_cadena = busqueda_binaria(lista_cadenas, elemento_cadena)
+if resultado_cadena != -1:
+    print(f"El elemento {elemento_cadena} se encuentra en el índice {resultado_cadena}.")
+else:
+    print(f"El elemento {elemento_cadena} no está en la lista.")
