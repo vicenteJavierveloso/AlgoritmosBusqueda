@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="d0" for="node" attr.name="numero" attr.type="string" />
+  <graph edgedefault="undirected">
+    <node id="Osorno">
+      <data key="d0">1</data>
+    </node>
+    <node id="Valdivia">
+      <data key="d0">1</data>
+    </node>
+    <node id="Frutillar">
+      <data key="d0">1</data>
+    </node>
+    <node id="Puerto Varas">
+      <data key="d0">1</data>
+    </node>
+    <node id="Puerto Montt">
+      <data key="d0">1</data>
+    </node>
+    <node id="Los Muermos">
+      <data key="d0">1</data>
+    </node>
+    <node id="Lago Ranco">
+      <data key="d0">1</data>
+    </node>
+    <node id="Futrono">
+      <data key="d0">10</data>
+    </node>
+    <node id="Santiago">
+      <data key="d0">1</data>
+    </node>
+    <node id="Concepcion">
+      <data key="d0">1</data>
+    </node>
+    <node id="Constitucion">
+      <data key="d0">1</data>
+    </node>
+    <node id="Arica">
+      <data key="d0">1</data>
+    </node>
+    <node id="La Serena">
+      <data key="d0">1</data>
+    </node>
+    <node id="Entre Lagos">
+      <data key="d0">1</data>
+    </node>
+    <node id="Iquique">
+      <data key="d0">1</data>
+    </node>
+    <node id="Antofagasta">
+      <data key="d0">1</data>
+    </node>
+    <node id="Valparaiso">
+      <data key="d0">1</data>
+    </node>
+    <node id="Viña del Mar">
+      <data key="d0">1</data>
+    </node>
+    <node id="Punta Arenas">
+      <data key="d0">1</data>
+    </node>
+    <edge source="Osorno" target="Frutillar" />
+    <edge source="Osorno" target="Lago Ranco" />
+    <edge source="Osorno" target="Futrono" />
+    <edge source="Osorno" target="Entre Lagos" />
+    <edge source="Osorno" target="Constitucion" />
+    <edge source="Valdivia" target="Constitucion" />
+    <edge source="Frutillar" target="Puerto Varas" />
+    <edge source="Frutillar" target="Punta Arenas" />
+    <edge source="Frutillar" target="Santiago" />
+    <edge source="Frutillar" target="Entre Lagos" />
+    <edge source="Puerto Varas" target="Puerto Montt" />
+    <edge source="Puerto Varas" target="Los Muermos" />
+    <edge source="Puerto Varas" target="La Serena" />
+    <edge source="Puerto Montt" target="Los Muermos" />
+    <edge source="Puerto Montt" target="Arica" />
+    <edge source="Lago Ranco" target="Futrono" />
+    <edge source="Lago Ranco" target="Iquique" />
+    <edge source="Futrono" target="Punta Arenas" />
+    <edge source="Santiago" target="Concepcion" />
+    <edge source="Santiago" target="Constitucion" />
+    <edge source="Santiago" target="Valparaiso" />
+    <edge source="Santiago" target="Entre Lagos" />
+    <edge source="Santiago" target="La Serena" />
+    <edge source="Arica" target="Punta Arenas" />
+    <edge source="Iquique" target="Antofagasta" />
+    <edge source="Antofagasta" target="Punta Arenas" />
+    <edge source="Viña del Mar" target="Punta Arenas" />
+  </graph>
+</graphml>

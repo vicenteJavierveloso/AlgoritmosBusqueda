@@ -48,6 +48,13 @@ mapa.add_edge("Futrono","Punta Arenas")
 mapa.add_edge("Entre Lagos","Frutillar")
 mapa.add_edge("Valdivia", "Constitucion")
 
+#Probar varios formatos de archivo
+#funciono correctamente graphml
+nx.write_pajek(mapa,"datos/grafo.net")
+nx.write_graphml(mapa,"datos/grafo.graphml")
+nx.write_gexf(mapa, "datos/grafo.gexf")
+
+
 #Fin creacion grafo de prueba
 
 #Busqueda en Anchura
