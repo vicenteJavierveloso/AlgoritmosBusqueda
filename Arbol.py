@@ -24,12 +24,12 @@ class Arbol:
         if actualnodo.dato ==busqueda:
             return busqueda #retorna la busqueda despues de pasar por la recursividad de abajo
         if actualnodo.dato<busqueda:
-            return self.buscar(actualnodo.derecho,busqueda),print(self.dato) # si en el anterior ir el nodo no es igual, verifica si el
+            return self.buscar(actualnodo.derecho,busqueda) # si en el anterior ir el nodo no es igual, verifica si el
                                                             #valor es mayor al actual nodo, si lo es la nueva vuelve a inciar la busqueda empezando
                                                             #del nodo que ha comparado
             
         else:
-            return self.buscar(actualnodo.izquierdo,busqueda),print(self.dato)#lo mismo pero si la busqueda fuera menor
+            return self.buscar(actualnodo.izquierdo,busqueda)#lo mismo pero si la busqueda fuera menor
 
 num=int(input("cuantos datos desea agregar"))
 
@@ -46,10 +46,10 @@ for i in range(1):#se crea un ciclo for para que despues de preguntar cuantos
 c=input(" ingrese dato que desea buscar")
 resultado=raiz.buscar(raiz,c)
 if resultado:
-    print("encontrado")
+    print(f"el dato {resultado} ha sido Encontrado")
 else:
     
-    print("non")
+    print(f"No se encuentra el dato {resultado}")
 
 #busqueda(no se si todos los tipos),in orden, postordern,preorden
 #eso mustra el recorrido
