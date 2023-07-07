@@ -56,19 +56,19 @@ mapa.add_edge("Valdivia", "Constitucion")
 #EJ busqueda en anchura
 #Se busca en el grafo mapa, a partir del nodo "Los Muermos", el nodo que contenga dentro de la llave "numero"
 #de su diccionario, el elemento "10"
-print(BEA(mapa,"Los Muermos", "numero", "10"))
+print(BEA(mapa,"Futrono", "numero", "5"))
 
 #Ej busqueda en profundidad
 #Se busca en el grafo mapa, el camino desde el nodo "Valdivia" a el nodo "Osorno"
 # se debe ejecutar una vez para evitar spamear el print ya que retorna algo cada vez que se llama
 #la funcion por ser recursiva por lo tanto se guarda el resultado final en una variable busqueda
-busqueda = BEP(mapa,"Valdivia","Peru")
+busqueda = BEP(mapa,"asd","Entre Lagos")
 #se da formato usando la funcion BEP_format()
 #busqueda[0]: diccionario padres
 #busqueda[1]: elemento a buscar
 #busqueda[2]: el tiempo de ejecucion
 #la funcion deberia retornar #[Entre Lagos, Santiago, Constitucion,Valdivia] como camino
-print(BEP_format(busqueda[0],busqueda[1],busqueda[2]))
+print(BEP_format(busqueda))
 
 
 nx.draw(mapa, with_labels=True)
