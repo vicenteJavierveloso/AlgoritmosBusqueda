@@ -1,9 +1,14 @@
 from core.listas.list_manager import cargar_lista
 from core.listas.Listas import busqueda_lineal, busqueda_binaria
+from core.grafos.graph_manager import cargar_grafo
+
+from core.grafos.BusquedaEnAnchura import BEA
 import sys
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (QApplication, QMainWindow, QPushButton, QStackedLayout, QHBoxLayout, QVBoxLayout, QGridLayout, QLabel, QWidget, QFileDialog, QLineEdit, QComboBox, QGroupBox, 
                              QPlainTextEdit, QMessageBox)
+import networkx as nx
+import matplotlib.pyplot as pyl
 
 class VentanaPrincipal(QMainWindow):
     def __init__(self):
@@ -95,12 +100,18 @@ class VentanaPrincipal(QMainWindow):
         self.label_ruta_grafos.setStyleSheet("QLabel { border: 1px solid gray; color: black; background-color: white }")
 
         label_2_BEP = QLabel("Elemento a buscar")
+        label_3_raiz_BEP = QLabel("Raiz")
         label_2_BEA = QLabel("Elemento a buscar")
         label_2_BEA_llave = QLabel("Llave donde buscar")
+        label_3_raiz_BEA = QLabel("Raiz")
 
-        elemento_BEP = QLineEdit()
-        elemento_BEA = QLineEdit()
-        llave_BEA = QLineEdit()
+
+        self.elemento_BEP = QLineEdit()
+        self.elemento_BEA = QLineEdit()
+        self.llave_BEA = QLineEdit()
+
+        self.raiz_BEP = QLineEdit()
+        self.raiz_BEA = QLineEdit()
 
         self.algoritmo_grafos = QComboBox()
         self.algoritmo_grafos.addItems(["Busqueda en Profundidad", "Busqueda en Anchura"])
@@ -112,11 +123,11 @@ class VentanaPrincipal(QMainWindow):
 
         salida_grafos = QGroupBox("Salida")
 
-        output_grafos = QPlainTextEdit()
-        output_grafos.setReadOnly(True)
+        self.output_grafos = QPlainTextEdit()
+        self.output_grafos.setReadOnly(True)
 
         output_grafos_layout = QVBoxLayout()
-        output_grafos_layout.addWidget(output_grafos)
+        output_grafos_layout.addWidget(self.output_grafos)
 
         salida_grafos.setLayout(output_grafos_layout)
 
@@ -130,15 +141,19 @@ class VentanaPrincipal(QMainWindow):
 
         layout_BEA = QHBoxLayout()
         layout_BEA.addWidget(label_2_BEA)
-        layout_BEA.addWidget(elemento_BEA)
+        layout_BEA.addWidget(self.elemento_BEA)
         layout_BEA.addWidget(label_2_BEA_llave)
-        layout_BEA.addWidget(llave_BEA)
+        layout_BEA.addWidget(self.llave_BEA)
+        layout_BEA.addWidget(label_3_raiz_BEA)
+        layout_BEA.addWidget(self.raiz_BEA)
         layout_BEA_widget = QWidget()
         layout_BEA_widget.setLayout(layout_BEA)
 
         layout_BEP = QHBoxLayout()
         layout_BEP.addWidget(label_2_BEP)
-        layout_BEP.addWidget(elemento_BEP)
+        layout_BEP.addWidget(self.elemento_BEP)
+        layout_BEP.addWidget(label_3_raiz_BEP)
+        layout_BEP.addWidget(self.raiz_BEP)
         layout_BEP_widget = QWidget()
         layout_BEP_widget.setLayout(layout_BEP)
 
@@ -322,8 +337,26 @@ class VentanaPrincipal(QMainWindow):
                 QMessageBox.warning(self,"Error", "Debe ingresar un elemento a buscar")
 
     def buscar_grafos(self):
-        archivo = open(self.archivo_grafos.selectedFiles()[0])
-    
+        grafo = cargar_grafo(self.archivo_grafos.selectedFiles()[0])
+        if self.algoritmo_grafos.currentText() == "Busqueda en Profundidad":
+            #Para solucionar resultados erroneos al ejecutar nuevamente el algoritmo se importa el mismo algoritmo aqui
+            import core.grafos.BusquedaEnProfundidad
+            busqueda = core.grafos.BusquedaEnProfundidad.BEP(grafo,self.raiz_BEP.text(),self.elemento_BEP.text())
+            busqueda_formatted = core.grafos.BusquedaEnProfundidad.BEP_format(busqueda)
+            self.output_grafos.setPlainText(busqueda_formatted)
+
+            #Una vez que se utilizo y se entrego un resultado se desimporta el modulo
+            sys.modules.pop('core.grafos.BusquedaEnProfundidad')
+
+            nx.draw(grafo,with_labels=True)
+            pyl.show()
+        elif self.algoritmo_grafos.currentText() == "Busqueda en Anchura":
+            busqueda = BEA(grafo,self.raiz_BEA.text(),self.llave_BEA.text(),self.elemento_BEA.text())
+            self.output_grafos.setPlainText(busqueda)
+
+            nx.draw(grafo,with_labels=True)
+            pyl.show()
+
     def buscar_arboles(self):
         archivo = open(self.archivo_arboles.selectedFiles()[0])
         

@@ -24,14 +24,17 @@ def Camino(padres, elemento, camino=[]):
     #Una vez que termina el algoritmo se retorna la lista con el camino
     #se corta la lista en el ultimo elemento porque este siempre sera None
     #ya que se llega a un nodo sin padre y la funcion solo lo añadira sin mas
-    return camino[:-1]
+    resultado = camino[:-1]
+    del camino
+    print(resultado)
+    return resultado
 
 
 #Funcion que implementa el algoritmo principal Busqueda en profundidad
 #se deben pasar varios parametros ya que se trata de un algoritmo recursivo por naturaleza
 #el grafo a trabajar, la raiz o nodo raiz, el elemento a buscar, los nodos encontrados, los padres de los nodos procesados y el tiempo
 #Que se guardara en una primera instancia apenas se ejecute el algoritmo por primera vez.
-def BEP(grafo:nx.Graph,raiz:str, elemento:str,encontrados = [], padres={}, t0 =0):
+def BEP(grafo:nx.Graph,raiz:str, elemento:str,encontrados = [], padres={}, t0=0):
     #si el tiempo es 0
     #cambia la variable por primera vez, luego no la cambia mas,
     #pero sera pasado a la siguiente llamada recursiva de la funcion
@@ -77,15 +80,15 @@ def BEP(grafo:nx.Graph,raiz:str, elemento:str,encontrados = [], padres={}, t0 =0
 def BEP_format(input):
     if input[0] == True:
         #el diccionario padres es procesado con la funcion Camino()
-        camino = Camino(input[1][0],input[1][1])
+        camino_generado = Camino(input[1][0],input[1][1])
         #se inserta el elemento que se estaba buscando en un principio para formar un camino
-        camino.insert(0,input[1][1])
+        camino_generado.insert(0,input[1][1])
         #se invierte el orden de la lista para darle el formato
         #de nodo origen -> nodo objetivo
-        camino.reverse()
+        camino_generado.reverse()
         #retorna la informacion y el tiempo
         if input[1][1] in input[1][0]:
-            return f"El camino para llegar al nodo {input[1][1]} es {camino}. Tiempo: {input[1][2]*1000}ms"
+            return f"El camino para llegar al nodo {input[1][1]} es {camino_generado}. Tiempo: {input[1][2]*1000}ms"
         else:
             return f"El nodo no se encuentra en el grafo. Tiempo: {input[1][2]*1000}ms"
     else:
