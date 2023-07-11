@@ -1,8 +1,9 @@
 from core.listas.list_manager import cargar_lista
+from core.listas.Listas import busqueda_lineal, busqueda_binaria
 import sys
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (QApplication, QMainWindow, QPushButton, QStackedLayout, QHBoxLayout, QVBoxLayout, QGridLayout, QLabel, QWidget, QFileDialog, QLineEdit, QComboBox, QGroupBox, 
-                             QPlainTextEdit)
+                             QPlainTextEdit, QMessageBox)
 
 class VentanaPrincipal(QMainWindow):
     def __init__(self):
@@ -36,7 +37,7 @@ class VentanaPrincipal(QMainWindow):
 
         label_2_listas = QLabel("Elemento a buscar")
 
-        elemento_listas = QLineEdit()
+        self.elemento_listas = QLineEdit()
 
         self.algoritmo_listas = QComboBox()
         self.algoritmo_listas.addItems(["Busqueda Binaria", "Busqueda Lineal"])
@@ -46,11 +47,11 @@ class VentanaPrincipal(QMainWindow):
 
         salida_listas = QGroupBox("Salida")
 
-        output_listas = QPlainTextEdit()
-        output_listas.setReadOnly(True)
+        self.output_listas = QPlainTextEdit()
+        self.output_listas.setReadOnly(True)
 
         output_listas_layout = QVBoxLayout()
-        output_listas_layout.addWidget(output_listas)
+        output_listas_layout.addWidget(self.output_listas)
 
         salida_listas.setLayout(output_listas_layout)
 
@@ -61,7 +62,7 @@ class VentanaPrincipal(QMainWindow):
         layout_principal_listas.addWidget(examinar_listas,0,2)
         layout_principal_listas.addWidget(self.label_ruta_listas,0,1)
         layout_principal_listas.addWidget(label_2_listas,1,0)
-        layout_principal_listas.addWidget(elemento_listas,1,1)
+        layout_principal_listas.addWidget(self.elemento_listas,1,1)
         layout_principal_listas.addWidget(self.algoritmo_listas,2,1)
         layout_principal_listas.addWidget(boton_buscar_listas,3,1)
 
@@ -299,7 +300,26 @@ class VentanaPrincipal(QMainWindow):
     #las siguientes funciones permiten utilizar los algoritmos de busqueda, la salida o resultados se escriben en el widget
     #QPlainText de cada seccion (lista, grafo o arbol)
     def buscar_listas(self):
-        archivo = open(self.archivo_grafos.selectedFiles()[0])
+        lista = cargar_lista(self.archivo_listas.selectedFiles()[0])
+        if self.algoritmo_listas.currentText() == "Busqueda Lineal":
+            if self.elemento_listas.isModified() == True:
+                busqueda = busqueda_lineal(lista,self.elemento_listas.text())
+                if busqueda[0] != -1:
+                    self.output_listas.setPlainText(f"La lista ingresada fue: {lista}\nEl algoritmo encontro el elemento en la lista en el indice {busqueda[0]}. Tiempo de ejecucion {busqueda[1]}ms")
+                else:
+                    self.output_listas.setPlainText(f"La lista ingresada fue: {lista}\nEl elemento no fue encontrado en la lista. Tiempo de ejecucion: {busqueda[1]}ms")
+            else:
+                QMessageBox.warning(self,"Error", "Debe ingresar un elemento a buscar")
+
+        elif self.algoritmo_listas.currentText() == "Busqueda Binaria":
+            if self.elemento_listas.isModified() == True:
+                busqueda = busqueda_binaria(lista,self.elemento_listas.text())
+                if busqueda[0] != -1:
+                    self.output_listas.setPlainText(f"La lista ingresada fue: {lista}\nLa lista ordenada segun el algoritmo es: {busqueda[2]}\nEl algoritmo encontro el elemento en la lista en el indice {busqueda[0]}. Tiempo de ejecucion {busqueda[1]}ms")
+                else:
+                    self.output_listas.setPlainText(f"La lista ingresada fue: {lista}\nLa lista ordenada segun el algoritmo es: {busqueda[2]}\nEl elemento no fue encontrado en la lista. Tiempo de ejecucion: {busqueda[1]}ms")
+            else:
+                QMessageBox.warning(self,"Error", "Debe ingresar un elemento a buscar")
 
     def buscar_grafos(self):
         archivo = open(self.archivo_grafos.selectedFiles()[0])
