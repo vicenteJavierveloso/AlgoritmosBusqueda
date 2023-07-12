@@ -11,7 +11,8 @@ from PyQt6.QtWidgets import (QApplication, QMainWindow, QPushButton, QStackedLay
                              QPlainTextEdit, QMessageBox)
 import networkx as nx
 import matplotlib.pyplot as pyl
-
+import matplotlib
+matplotlib.use("qtagg")
 class VentanaPrincipal(QMainWindow):
     def __init__(self):
         super().__init__()
