@@ -26,7 +26,6 @@ def Camino(padres, elemento, camino=[]):
     #ya que se llega a un nodo sin padre y la funcion solo lo añadira sin mas
     resultado = camino[:-1]
     del camino
-    print(resultado)
     return resultado
 
 
