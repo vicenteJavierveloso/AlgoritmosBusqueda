@@ -370,8 +370,17 @@ class VentanaPrincipal(QMainWindow):
 
                             busqueda = BEA(grafo,self.raiz_BEA.text(),self.llave_BEA.text(),self.elemento_BEA.text())
                             self.output_grafos.setPlainText(busqueda + "\nDesplegando grafo")
-                            nx.draw(grafo,with_labels=True)
-                            pyl.show()
+
+                            try:
+                                labels = dict()
+                                for node in grafo.nodes:
+                                    labels[node] = f"{node}\n{nx.get_node_attributes(grafo,self.llave_BEA.text())[node]}"
+
+                                nx.draw(grafo,with_labels=True, labels=labels)
+                                pyl.show()
+                            except:
+                                nx.draw(grafo,with_labels=True)
+                                pyl.show()
                         else:
                             QMessageBox.warning(self, "Error", "Debe ingresar un elemento para realizar la busqueda")
                     else:

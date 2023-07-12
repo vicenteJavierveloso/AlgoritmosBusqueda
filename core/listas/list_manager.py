@@ -31,7 +31,7 @@ def cargar_lista(ruta):
     #limpia la lista de saltos de linea
     lista = lista.replace("\n","")
     #divide la lista basado en las comas
-    lista = list(lista.split(","))
+    lista = lista.split(",")
     return lista
 
 if __name__ == "__main__":
