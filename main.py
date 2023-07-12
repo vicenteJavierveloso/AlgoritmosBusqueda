@@ -317,9 +317,12 @@ class VentanaPrincipal(QMainWindow):
     #las siguientes funciones permiten utilizar los algoritmos de busqueda, la salida o resultados se escriben en el widget
     #QPlainText de cada seccion (lista, grafo o arbol)
     def buscar_listas(self):
-        lista = cargar_lista(self.archivo_listas.selectedFiles()[0])
+        try:
+            lista = cargar_lista(self.archivo_listas.selectedFiles()[0])
+        except IndexError:
+            QMessageBox.warning(self,"Error", "Debe seleccionar un archivo para cargar la estructura de datos")
         if self.algoritmo_listas.currentText() == "Busqueda Lineal":
-            if self.elemento_listas.isModified() == True:
+            if self.elemento_listas.text() != "":
                 busqueda = busqueda_lineal(lista,self.elemento_listas.text())
                 if busqueda[0] != -1:
                     self.output_listas.setPlainText(f"La lista ingresada fue: {lista}\nEl algoritmo encontro el elemento en la lista en el indice {busqueda[0]}. Tiempo de ejecucion {busqueda[1]}ms")
@@ -329,7 +332,7 @@ class VentanaPrincipal(QMainWindow):
                 QMessageBox.warning(self,"Error", "Debe ingresar un elemento a buscar")
 
         elif self.algoritmo_listas.currentText() == "Busqueda Binaria":
-            if self.elemento_listas.isModified() == True:
+            if self.elemento_listas.text() != "":
                 busqueda = busqueda_binaria(lista,self.elemento_listas.text())
                 if busqueda[0] != -1:
                     self.output_listas.setPlainText(f"La lista ingresada fue: {lista}\nLa lista ordenada segun el algoritmo es: {busqueda[2]}\nEl algoritmo encontro el elemento en la lista en el indice {busqueda[0]}. Tiempo de ejecucion {busqueda[1]}ms")
@@ -339,34 +342,60 @@ class VentanaPrincipal(QMainWindow):
                 QMessageBox.warning(self,"Error", "Debe ingresar un elemento a buscar")
 
     def buscar_grafos(self):
-        grafo = cargar_grafo(self.archivo_grafos.selectedFiles()[0])
-        if self.algoritmo_grafos.currentText() == "Busqueda en Profundidad":
-            #Para solucionar resultados erroneos al ejecutar nuevamente el algoritmo se importa el mismo algoritmo aqui
-            import core.grafos.BusquedaEnProfundidad
-            busqueda = core.grafos.BusquedaEnProfundidad.BEP(grafo,self.raiz_BEP.text(),self.elemento_BEP.text())
-            busqueda_formatted = core.grafos.BusquedaEnProfundidad.BEP_format(busqueda)
-            self.output_grafos.setPlainText(busqueda_formatted + "\nDesplegando grafo")
+        try:
+            grafo = cargar_grafo(self.archivo_grafos.selectedFiles()[0])
+            if self.algoritmo_grafos.currentText() == "Busqueda en Profundidad":
+                if self.elemento_BEP.text() != "":
+                    if self.raiz_BEP.text() != "":
+                        #Para solucionar resultados erroneos al ejecutar nuevamente el algoritmo se importa el mismo algoritmo aqui
+                        import core.grafos.BusquedaEnProfundidad
+                        busqueda = core.grafos.BusquedaEnProfundidad.BEP(grafo,self.raiz_BEP.text(),self.elemento_BEP.text())
+                        busqueda_formatted = core.grafos.BusquedaEnProfundidad.BEP_format(busqueda)
+                        self.output_grafos.setPlainText(busqueda_formatted + "\nDesplegando grafo")
 
-            #Una vez que se utilizo y se entrego un resultado se desimporta el modulo
-            sys.modules.pop('core.grafos.BusquedaEnProfundidad')
+                        #Una vez que se utilizo y se entrego un resultado se desimporta el modulo
+                        sys.modules.pop('core.grafos.BusquedaEnProfundidad')
 
-            nx.draw(grafo,with_labels=True)
-            pyl.show()
-        elif self.algoritmo_grafos.currentText() == "Busqueda en Anchura":
-            busqueda = BEA(grafo,self.raiz_BEA.text(),self.llave_BEA.text(),self.elemento_BEA.text())
-            self.output_grafos.setPlainText(busqueda + "\nDesplegando grafo")
+                        nx.draw(grafo,with_labels=True)
+                        pyl.show()
+                    else:
+                        QMessageBox.warning(self, "Error", "Debe ingresar un nodo raiz para la busqueda")
+                else:
+                    QMessageBox.warning(self, "Error", "Debe ingresar un elemento a buscar")
 
-            nx.draw(grafo,with_labels=True)
-            pyl.show()
+            elif self.algoritmo_grafos.currentText() == "Busqueda en Anchura":
+                if self.raiz_BEA.text() != "":
+                    if self.llave_BEA.text() != "":
+                        if self.elemento_BEA.text() != "":
+
+                            busqueda = BEA(grafo,self.raiz_BEA.text(),self.llave_BEA.text(),self.elemento_BEA.text())
+                            self.output_grafos.setPlainText(busqueda + "\nDesplegando grafo")
+                            nx.draw(grafo,with_labels=True)
+                            pyl.show()
+                        else:
+                            QMessageBox.warning(self, "Error", "Debe ingresar un elemento para realizar la busqueda")
+                    else:
+                        QMessageBox.warning(self, "Error", "Debe ingresar una llave para realizar la busqueda")
+                else:
+                    QMessageBox.warning(self, "Error", "Debe ingresar un nodo raiz para la busqueda")
+
+        except IndexError:
+            QMessageBox.warning(self,"Error", "Debe seleccionar un archivo para cargar la estructura de datos")
 
     def buscar_arboles(self):
-        arbol = cargar_arbol(self.archivo_arboles.selectedFiles()[0])
-        resultado_busqueda_arbol = buscar_en_arbol(arbol,self.elemento_arboles.text())
-        if resultado_busqueda_arbol[0] != None:
-            self.output_arboles.setPlainText(f"El elemento {self.elemento_arboles.text()} fue encontrado en el arbol. Tiempo de ejecucion: {resultado_busqueda_arbol[1]}ms")
-        else:
-            self.output_arboles.setPlainText(f"El elemento {self.elemento_arboles.text()} no fue encontrado en el arbol. Tiempo de ejecucion: {resultado_busqueda_arbol[1]}ms")
+        try:
+            arbol = cargar_arbol(self.archivo_arboles.selectedFiles()[0])
+            if self.elemento_arboles.text() != "":
 
+                resultado_busqueda_arbol = buscar_en_arbol(arbol,self.elemento_arboles.text())
+                if resultado_busqueda_arbol[0] != None:
+                    self.output_arboles.setPlainText(f"El elemento {self.elemento_arboles.text()} fue encontrado en el arbol. Tiempo de ejecucion: {resultado_busqueda_arbol[1]}ms")
+                else:
+                    self.output_arboles.setPlainText(f"El elemento {self.elemento_arboles.text()} no fue encontrado en el arbol. Tiempo de ejecucion: {resultado_busqueda_arbol[1]}ms")
+            else:
+                QMessageBox.warning(self, "Error", "Debe ingresar un elemento para realizar la busqueda")
+        except IndexError:
+            QMessageBox.warning(self,"Error", "Debe seleccionar un archivo para cargar la estructura de datos")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
