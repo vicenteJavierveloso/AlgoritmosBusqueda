@@ -33,6 +33,8 @@ class VentanaPrincipal(QMainWindow):
         label_1_listas = QLabel("Archivo de entrada")
 
         self.archivo_listas = QFileDialog()
+        self.archivo_listas.setNameFilter("Archivos de lista (*.csv)")
+
         examinar_listas = QPushButton("Examinar")
         examinar_listas.clicked.connect(lambda: self.archivo_listas.show())
 
@@ -92,6 +94,8 @@ class VentanaPrincipal(QMainWindow):
         label_1_grafos = QLabel("Archivo de entrada")
 
         self.archivo_grafos = QFileDialog()
+        self.archivo_grafos.setNameFilter("Archivos de grafo (*.graphml)")
+
         examinar_grafos = QPushButton("Examinar")
         examinar_grafos.clicked.connect(lambda: self.archivo_grafos.show())
 
@@ -192,6 +196,8 @@ class VentanaPrincipal(QMainWindow):
         label_1_arboles = QLabel("Archivo de entrada")
 
         self.archivo_arboles = QFileDialog()
+        self.archivo_arboles.setNameFilter("Archivos de arbol (*.pkl)")
+
         examinar_arboles = QPushButton("Examinar")
         examinar_arboles.clicked.connect(lambda: self.archivo_arboles.show())
 
