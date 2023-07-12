@@ -1,8 +1,10 @@
 from core.listas.list_manager import cargar_lista
 from core.listas.Listas import busqueda_lineal, busqueda_binaria
 from core.grafos.graph_manager import cargar_grafo
-
 from core.grafos.BusquedaEnAnchura import BEA
+from core.arboles.tree_manager import cargar_arbol
+from core.arboles.Arbol import buscar_en_arbol
+
 import sys
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (QApplication, QMainWindow, QPushButton, QStackedLayout, QHBoxLayout, QVBoxLayout, QGridLayout, QLabel, QWidget, QFileDialog, QLineEdit, QComboBox, QGroupBox, 
@@ -201,21 +203,21 @@ class VentanaPrincipal(QMainWindow):
 
         label_2_arboles = QLabel("Elemento a buscar")
 
-        elemento_arboles = QLineEdit()
+        self.elemento_arboles = QLineEdit()
 
-        algoritmo_arboles = QComboBox()
-        algoritmo_arboles.addItems(["Busqueda Binaria"])
+        self.algoritmo_arboles = QComboBox()
+        self.algoritmo_arboles.addItems(["Busqueda Binaria"])
 
         boton_buscar_arboles = QPushButton("Buscar")
         boton_buscar_arboles.clicked.connect(self.buscar_arboles)
 
         salida_arboles = QGroupBox("Salida")
 
-        output_arboles = QPlainTextEdit()
-        output_arboles.setReadOnly(True)
+        self.output_arboles = QPlainTextEdit()
+        self.output_arboles.setReadOnly(True)
 
         output_arboles_layout = QVBoxLayout()
-        output_arboles_layout.addWidget(output_arboles)
+        output_arboles_layout.addWidget(self.output_arboles)
 
         salida_arboles.setLayout(output_arboles_layout)
 
@@ -226,8 +228,8 @@ class VentanaPrincipal(QMainWindow):
         layout_principal_arboles.addWidget(examinar_arboles,0,2)
         layout_principal_arboles.addWidget(self.label_ruta_arboles,0,1)
         layout_principal_arboles.addWidget(label_2_arboles,1,0)
-        layout_principal_arboles.addWidget(elemento_arboles,1,1)
-        layout_principal_arboles.addWidget(algoritmo_arboles,2,1)
+        layout_principal_arboles.addWidget(self.elemento_arboles,1,1)
+        layout_principal_arboles.addWidget(self.algoritmo_arboles,2,1)
         layout_principal_arboles.addWidget(boton_buscar_arboles,3,1)
 
         layout_principal_arboles.addWidget(salida_arboles,4,1)
@@ -343,7 +345,7 @@ class VentanaPrincipal(QMainWindow):
             import core.grafos.BusquedaEnProfundidad
             busqueda = core.grafos.BusquedaEnProfundidad.BEP(grafo,self.raiz_BEP.text(),self.elemento_BEP.text())
             busqueda_formatted = core.grafos.BusquedaEnProfundidad.BEP_format(busqueda)
-            self.output_grafos.setPlainText(busqueda_formatted)
+            self.output_grafos.setPlainText(busqueda_formatted + "\nDesplegando grafo")
 
             #Una vez que se utilizo y se entrego un resultado se desimporta el modulo
             sys.modules.pop('core.grafos.BusquedaEnProfundidad')
@@ -352,14 +354,19 @@ class VentanaPrincipal(QMainWindow):
             pyl.show()
         elif self.algoritmo_grafos.currentText() == "Busqueda en Anchura":
             busqueda = BEA(grafo,self.raiz_BEA.text(),self.llave_BEA.text(),self.elemento_BEA.text())
-            self.output_grafos.setPlainText(busqueda)
+            self.output_grafos.setPlainText(busqueda + "\nDesplegando grafo")
 
             nx.draw(grafo,with_labels=True)
             pyl.show()
 
     def buscar_arboles(self):
-        archivo = open(self.archivo_arboles.selectedFiles()[0])
-        
+        arbol = cargar_arbol(self.archivo_arboles.selectedFiles()[0])
+        resultado_busqueda_arbol = buscar_en_arbol(arbol,self.elemento_arboles.text())
+        if resultado_busqueda_arbol[0] != None:
+            self.output_arboles.setPlainText(f"El elemento {self.elemento_arboles.text()} fue encontrado en el arbol. Tiempo de ejecucion: {resultado_busqueda_arbol[1]}ms")
+        else:
+            self.output_arboles.setPlainText(f"El elemento {self.elemento_arboles.text()} no fue encontrado en el arbol. Tiempo de ejecucion: {resultado_busqueda_arbol[1]}ms")
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
